@@ -17,3 +17,4 @@
 *.qps
 db
 incremental_db
+.DS_Store
