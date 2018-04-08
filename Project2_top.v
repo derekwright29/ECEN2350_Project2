@@ -33,18 +33,24 @@ module Project2_top(
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================
-wire clk_out;
-			 
 
+			 
+	//state vars
 //	reg [2:0] currState,nextState;
 //	assign LED[8:6] = currState; //display state on LEDs
 //	reg [1:0] buttons;
-//	wire clk_50MHZ;
-//	assign clk_50MHZ = MAX10_CLK1_50;
-//	wire clk_1kHz;
+	wire clk_1kHZ;
 //	
-//	reg [9:0] ReacTime;
-//	reg [20:0] HEX_out;
+	wire [12:0] ReacTime; //means we can go up to 8.191 seconds
+	wire [15:0] HEX_out;
+
+
+//defining states
+parameter HI_SCORE = 3'b000;
+parameter DELAYING = 3'b001;
+parameter TIMING = 3'b010;
+parameter DISPLAYING = 3'b011;
+parameter GO_BUFFS = 3'b1xx; //last two digits are don't cares.
 
 
 
@@ -63,13 +69,13 @@ wire clk_out;
 //		buttons[0] = ~buttons[0];
 //     end
 //	  
-//	 detState stateMachine(buttons, clk_50MHZ,SW[9]);
+//	 stateMachine detState(clk_50MHZ, currState, nextState);
 //	 clk_divider(clk_50MHZ, clk_1kHZ);
 //	 
 //	 always @ (currState)
 //		begin
 //			if (currState == COUNTING) begin
-//				timer Counter(clk_1kHZ, ReacTime);
+//				timer BCD_counter(clk_1kHZ, ReacTime);
 //		end
 //		
 //		dispTime BCD(ReacTime, HEX_out);
@@ -77,9 +83,20 @@ wire clk_out;
 //		assign HEX0 = HEX_out[7:0];
 		
 
-	 clock_div test1(MAX10_CLK1_50, clk_out);
-	 defparam test1.n = 25000000;
-	 assign LEDR[0] = clk_out;
+	 clock_div test1(MAX10_CLK1_50, clk_1kHZ);
+	 BCD_counter timer(clk_1kHZ, ReacTime);
+	 BCD_decoder BCD(ReacTime, HEX_out);
+	 
+	 
+	 SevenSeg mS(HEX_out[3:0], HEX0[6:0],0);
+	 SevenSeg cS(HEX_out[7:4], HEX1[6:0],0);
+	 SevenSeg dS(HEX_out[11:8], HEX2[6:0],0);
+	 SevenSeg S(HEX_out[15:12], HEX3[6:0],0);
+	 
+	 assign HEX0[7] = 1;
+	 assign HEX1[7] = 1;
+	 assign HEX2[7] = 1;
+	 assign HEX3[7] = 0;
 	 
 
 	 endmodule

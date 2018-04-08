@@ -1,9 +1,9 @@
 module clock_div(clk, new_clk);
-   parameter n = 50000; //for 1kHz clock_out
+   parameter n = 25000; //for 1kHz clock_out 50M/25k/2 = 1k
    input clk;
    output reg new_clk;
    
-   reg [25:0] count;// Gives a lowest clock freq of ~Hz
+   reg [25:0] count;// Gives a lowest clock freq of ~1/2 Hz
    
    
    always @(posedge clk)
