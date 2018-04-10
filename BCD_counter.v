@@ -1,11 +1,12 @@
-module BCD_counter(clk, count);
-	input clk;
-	output reg [12:0] count;
+module BCD_counter(clk, count, ready);
+   input clk;
+   output reg [12:0] count;
+   
+   always @(posedge clk)
+     begin
+	count = count + 1;
+     end
 	
-	always @(posedge clk)
-	begin
-		count = count + 1;
-	end
-	
-endmodule
+endmodule // BCD_counter
+
 	
