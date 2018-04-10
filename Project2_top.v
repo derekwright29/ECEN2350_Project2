@@ -75,7 +75,25 @@ wire clk_out;
 //		dispTime BCD(ReacTime, HEX_out);
 //		
 //		assign HEX0 = HEX_out[7:0];
-		
+
+   wire LFSR_ready, LFSR_en,delay_over;
+   reg [9:0] LFSR_out;
+   initial
+     begin
+	LFSR_out = 10'b1000101101;
+     end
+
+   always @(posedge LFSR_en)
+     begin
+	generate
+	   while(!LFSR_ready)
+	     begin
+		LFSR get_delay0(LFSR_en, LFSR_out, LFSR_ready);
+	     end
+	   endgenerate
+     end
+   
+Counter wait_delay(LFSR_out, delay_over)		
 
 	 clock_div test1(MAX10_CLK1_50, clk_out);
 	 defparam test1.n = 25000000;
