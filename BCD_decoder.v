@@ -1,6 +1,6 @@
 module BCD_decoder(count,display, cout);
-   input [4:0] count;
-   output reg [4:0] display;
+   input [3:0] count;
+   output reg [3:0] display;
    output 	    cout;
 
    always @(count)

@@ -97,27 +97,31 @@ parameter GO_BUFFS = 3'b1xx; //last two digits are don't cares.
 		LFSR get_delay0(LFSR_en, LFSR_out, LFSR_ready);
 	     end
 	   endgenerate
+	LFSR_ready = 0; //reset for next time
+	LFSR_count_enable
      end
    
-Counter wait_delay(LFSR_out, delay_over)		
+   counter wait_delay(clk_1kHz, 1, LFSR_count_enable, LFSR_out, delay_over);
+		
 
-	 clock_div test1(MAX10_CLK1_50, clk_1kHZ);
-	 BCD_counter timer(clk_1kHZ, ReacTime);
-	 BCD_decoder BCD(ReacTime, HEX_out);
-	 
-	 
-	 SevenSeg mS(HEX_out[3:0], HEX0[6:0],0);
-	 SevenSeg cS(HEX_out[7:4], HEX1[6:0],0);
-	 SevenSeg dS(HEX_out[11:8], HEX2[6:0],0);
-	 SevenSeg S(HEX_out[15:12], HEX3[6:0],0);
-	 
-	 assign HEX0[7] = 1;
-	 assign HEX1[7] = 1;
-	 assign HEX2[7] = 1;
-	 assign HEX3[7] = 0;
-	 
+   clock_div test1(MAX10_CLK1_50, clk_1kHZ);
+   BCD_counter timer1(clk_1kHZ, ReacTime);
+   BCD_decoder BCD(ReacTime, HEX_out);
+   
+   
+   SevenSeg mS(HEX_out[3:0], HEX0[6:0],0);
+   SevenSeg cS(HEX_out[7:4], HEX1[6:0],0);
+   SevenSeg dS(HEX_out[11:8], HEX2[6:0],0);
+   SevenSeg S(HEX_out[15:12], HEX3[6:0],0);
+   
+   assign HEX0[7] = 1;
+   assign HEX1[7] = 1;
+   assign HEX2[7] = 0;
+   assign HEX3[7] = 1;
+   
 
-	 endmodule
+endmodule // Project2_top
+
 
 
 

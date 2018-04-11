@@ -10,16 +10,20 @@ module LFSR(enable, LF_shift_reg, ready);
    output 	ready;
    
    reg 		in_shift;
-   
-   if (enable)
+
+   always @ (posedge enable)
      begin
-	in_shift = LF_shift_reg[9] ^ LF_shift_reg[5];
-	LF_shift_reg = {LF_shift_reg[8:0],in_shift};
-	if (LF_shift_reg < 500)
-	  ready = 0;
-	else if (LF_shift_reg > 5000
-	  ready = 1;
+//	while(!ready) //top currently has this wait-til ready functionality.
+//	  begin
+	     in_shift = LF_shift_reg[11] ^ LF_shift_reg[5];
+	     LF_shift_reg = {LF_shift_reg[10:0],in_shift};
+	     if (LF_shift_reg < 500)
+	       ready = 0;
+	     else
+	       ready = 1;
+//	  end
+	
      end
 endmodule // LFSR
 
-     
+

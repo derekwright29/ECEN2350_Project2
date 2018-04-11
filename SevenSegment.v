@@ -23,12 +23,12 @@ module SevenSeg (x, leds,off);
 				default: leds<= 7'b1111111;
 				
 				///////HEX VALUES /////
-//			  10: leds <= 7'b0001000;
-//			  11: leds <= 7'b0000011;
-//			  12: leds <= 7'b1000110;
-//			  13: leds <= 7'b0100001;
-//			  14: leds <= 7'b0000110;
-//			  15: leds <= 7'b0001110;
+//			  10: leds <= 7'b0001000; //A
+//			  11: leds <= 7'b0000011; //B
+//			  12: leds <= 7'b1000110; //C
+//			  13: leds <= 7'b0100001; //D
+//			  14: leds <= 7'b0000110; //E			 
+//			  15: leds <= 7'b0001110; //F
 			endcase 
 		end
 	end
