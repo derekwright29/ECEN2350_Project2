@@ -1,7 +1,7 @@
 module BCD_decoder(count,display, cout);
    input [3:0] count;
    output reg [3:0] display;
-   output 	    cout;
+   output 	reg    cout;
 
    always @(count)
      begin

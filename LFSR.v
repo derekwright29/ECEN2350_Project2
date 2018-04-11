@@ -6,8 +6,8 @@
 
 module LFSR(enable, LF_shift_reg, ready);
    input enable;
-   output [11:0] LF_shift_reg;
-   output 	ready;
+   output reg [11:0] LF_shift_reg;
+   output reg	ready;
    
    reg 		in_shift;
 

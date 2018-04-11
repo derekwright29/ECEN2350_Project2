@@ -1,7 +1,8 @@
-module BCD_counter(clk, enable, data, ovr);
+//Before class on Wednesday
+module BCD_counter_old(clk, enable, data, ovr);
    input clk,enable;
    output reg [12:0] data;
-   output 	     ovr;
+   output reg		   ovr;
    
    always @(posedge clk)
      begin
@@ -33,19 +34,63 @@ module BCD_counter(clk, enable, data, ovr);
 	
 endmodule // BCD_counter
 
+
+//after class on Monday
+module BCD_counter(clk,enable,clear_,data, count,RCO);
+	input clk, enable, clear_;
+	input [3:0] data;
+	output reg RCO;
+	output reg [3:0] count;
+	
+	wire load_;
+	assign load_ = ~(count[3] & count[0]);
+	
+	always @(posedge clk, negedge clear_)
+	begin
+		if (!clear_)
+			count = 0;
+		else if(enable)
+		begin
+			if(!load_)
+			begin
+				count <= data; //data will be passed as 0 for this module
+				RCO = 1;
+			end
+			else
+			begin
+				count = count + 1;
+				RCO = 0;
+			end
+		end
+	end
+
+
+
+
+endmodule
+
+
+
+
+
+
+
+
+
+
 	
 module counter(clk, _reset, enable, count_to, done);
-   paramter k = 12;
+   parameter k = 12;
   
    input clk, _reset, enable;
    input [k-1:0] count_to;
-   output 	 done;
+   output 	reg done;
 
-   wire [k-1:0]  count;
+   reg [k-1:0]  count;
 
    always @(posedge clk, negedge _reset)
      begin
-	if(!reset)
+	if(! _reset)
 	  count = 0;
 	else if(enable)
 	  count = count + 1;

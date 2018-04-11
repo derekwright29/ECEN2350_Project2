@@ -20,3 +20,5 @@ incremental_db
 .DS_Store
 
 .json
+
+.qsys_edit/

@@ -1,16 +1,17 @@
-module stateMachine(clk, state_inputs, state);
-   always @(state_inputs)
-     begin
-	case (state_inputs)
-	endcase // case (state_inputs)
-     end
-endmodule // stateMachine
+//module stateMachine(clk, state_inputs, state);
+//   always @(state_inputs)
+//     begin
+//	case (state_inputs)
+//		2: state = COUNTING;
+//		default: state = WAITING;
+//	endcase // case (state_inputs)
+//     end
+//endmodule // stateMachine
 
-endmodule
 
 module state_decoder(state, enables);
    input [2:0] state;
-   output [5:0] enables;
+   output reg [5:0] enables;
 
    always @(state)
      begin

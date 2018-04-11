@@ -39,10 +39,12 @@ module Project2_top(
 //	reg [2:0] currState,nextState;
 //	assign LED[8:6] = currState; //display state on LEDs
 //	reg [1:0] buttons;
-	wire clk_1kHZ;
+	wire clk_1kHz;
 //	
 	wire [12:0] ReacTime; //means we can go up to 8.191 seconds
 	wire [15:0] HEX_out;
+	
+	wire LFSR_count_enable;
 
 
 //defining states
@@ -88,24 +90,24 @@ parameter GO_BUFFS = 3'b1xx; //last two digits are don't cares.
      begin
 	LFSR_out = 10'b1000101101;
      end
-
-   always @(posedge LFSR_en)
-     begin
-	generate
-	   while(!LFSR_ready)
-	     begin
-		LFSR get_delay0(LFSR_en, LFSR_out, LFSR_ready);
-	     end
-	   endgenerate
-	LFSR_ready = 0; //reset for next time
-	LFSR_count_enable
-     end
+// attempt: doesn't compile. Probably because of while/generate combo...
+//   always @(posedge LFSR_en)
+//     begin
+//		generate
+//			while(!LFSR_ready)
+//				begin
+//					LFSR get_delay0(LFSR_en, LFSR_out, LFSR_ready);
+//				end
+//	   endgenerate
+//		LFSR_ready = 0; //reset for next time
+//		LFSR_count_enable = 1;
+//     end
    
    counter wait_delay(clk_1kHz, 1, LFSR_count_enable, LFSR_out, delay_over);
 		
 
-   clock_div test1(MAX10_CLK1_50, clk_1kHZ);
-   BCD_counter timer1(clk_1kHZ, ReacTime);
+   clock_div test1(MAX10_CLK1_50, clk_1kHz);
+   BCD_counter timer1(clk_1kHz, ReacTime);
    BCD_decoder BCD(ReacTime, HEX_out);
    
    

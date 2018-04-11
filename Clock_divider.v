@@ -11,10 +11,10 @@ module clock_div(clk, new_clk);
       if (count == n)
 		begin
 			count = 0;
-			new_clk = ~new_clk;
+			new_clk <= ~new_clk;
 		end
 		else
-			count = count + 1;
+			count <= count + 1;
    end
 	
 	endmodule
