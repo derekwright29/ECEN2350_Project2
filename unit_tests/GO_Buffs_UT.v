@@ -25,17 +25,21 @@ module GO_Buffs_UT(
 
 wire buff_clk;
 wire [3:0] a,b,c,d,e,f;
-
+wire test_led;
+assign LEDR[5] = test_led;
 clock_div scroll_clk(MAX10_CLK1_50, buff_clk);
+defparam scroll_clk.n = 10000000;
 GOBUFFS scroll(buff_clk,a,b,c,d,e,f);
 
 
-Sko_SevSeg out0(buff_clk,a, HEX0[6:0]);
-Sko_SevSeg out1(buff_clk,b, HEX1[6:0]);
-Sko_SevSeg out2(buff_clk,c, HEX2[6:0]);
-Sko_SevSeg out3(buff_clk,d, HEX3[6:0]);
-Sko_SevSeg out4(buff_clk,e, HEX4[6:0]);
-Sko_SevSeg out5(buff_clk,f, HEX5[6:0]);
+Sko_SevSeg out0(a, HEX0[6:0]);
+Sko_SevSeg out1(b, HEX1[6:0]);
+Sko_SevSeg out2(c, HEX2[6:0]);
+Sko_SevSeg out3(d, HEX3[6:0]);
+Sko_SevSeg out4(e, HEX4[6:0]);
+Sko_SevSeg out5(f, HEX5[6:0]);
+
+
 assign HEX0[7] = 1;
 assign HEX1[7] = 1;
 assign HEX2[7] = 1;
