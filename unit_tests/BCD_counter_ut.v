@@ -23,10 +23,10 @@ module BCD_counter_ut(
 	input 		     [9:0]		SW
 );
 
-//clk,enable,clear_,data, count,RCO
+//BCD module arguments: clk,enable,clear_,data, count,RCO
 
 wire clk_1kHz;
-wire load_ms, load_cs, load_ds, load_s;
+//wire load_ms, load_cs, load_ds, load_s;
 wire RCO_ms,RCO_cs,RCO_ds, RCO_s;
 wire [3:0] count_ms;
 wire [3:0] count_cs;
@@ -49,5 +49,11 @@ assign HEX2[7] = 0;
 assign HEX0[7] = 1;
 assign HEX1[7] = 1;
 assign HEX3[7] = 1;
+assign HEX4[7] = 1;
+assign HEX5[7] = 1;
+
+SevenSeg(0,HEX3[6:0],1);
+SevenSeg(0,HEX4[6:0],1);
+SevenSeg(0,HEX5[6:0],1);
 
 endmodule

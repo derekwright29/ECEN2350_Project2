@@ -8,21 +8,21 @@
 //     end
 //endmodule // stateMachine
 
+//Enables: LFSR counter, Timer counter, 
 
-module state_decoder(state, enables);
-   input [2:0] state;
-   output reg [5:0] enables;
-
-   always @(state)
-     begin
-	case(state)
-	  0: enables <= 5'b00001;
-	  1: enables <= 5'b00010;
-	  2: enables <= 5'b00100;
-	  3: enables <= 5'b01000;
-	  3'b1xx: enables <= 5'b10000;
-	  //default: enables <= 5'b00001;
-	endcase // case (state)
-     end // always @ (state)
-endmodule // state_decoder
-
+//module state_decoder(state, enables);
+//   input [2:0] state;
+//   output reg [5:0] enables;
+//
+//   always @(state)
+//     begin
+//	case(state)
+//	  0: enables <= 5'b00001;
+//	  1: enables <= 5'b00010;
+//	  2: enables <= 5'b00100;
+//	  3: enables <= 5'b01000;
+//	  3'b1xx: enables <= 5'b10000;
+//	  //default: enables <= 5'b00001;
+//	endcase // case (state)
+//     end // always @ (state)
+//endmodule // state_decoder
