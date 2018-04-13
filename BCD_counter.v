@@ -68,16 +68,6 @@ module BCD_counter(clk,enable,clear_,data, count,RCO);
 
 
 endmodule
-
-
-
-
-
-
-
-
-
-
 	
 module counter(clk, _reset, enable, count_to, done);
    parameter k = 12;
