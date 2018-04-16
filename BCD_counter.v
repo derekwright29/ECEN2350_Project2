@@ -1,40 +1,3 @@
-//Before class on Wednesday
-module BCD_counter_old(clk, enable, data, ovr);
-   input clk,enable;
-   output reg [12:0] data;
-   output reg		   ovr;
-   
-   always @(posedge clk)
-     begin
-	if (enable)
-	  begin
-	     data[3:0] = data[3:0] + 1;
-	     if (data[3:0] > 9)
-	       begin
-		  data[3:0] = 0;
-		  data[7:4] = data[7:4] + 1;
-		  if(data[7:4] > 9)
-		    begin
-		       data[7:4] = 0;
-		       data[11:8] = data[11:8] + 1;
-		       if (data[11:8] > 9)
-			 begin
-			    data[11:8] = 0;
-			    data[15:12] = data[15:12] + 1;
-			    if (data[15:12] > 9)
-			      begin
-				 data[15:12] = 0;
-				 ovr = 1;
-			      end			 
-			 end		       
-		    end		  
-	       end	     			 
-	  end	    
-     end
-	
-endmodule // BCD_counter
-
-
 //after class on Monday
 module BCD_counter(clk,enable,clear_,data, count,RCO);
 	input clk, enable, clear_;
@@ -62,33 +25,37 @@ module BCD_counter(clk,enable,clear_,data, count,RCO);
 				RCO = 0;
 			end
 		end
+	   else begin
+			
+	   end	
 	end
-
-
-
 
 endmodule
 	
-module counter(clk, _reset, enable, count_to, done);
+	
+	//TODO: produce reliable reset signal
+module counter(clk, enable, count_to, done);
    parameter k = 12;
   
-   input clk, _reset, enable;
+   input clk, enable;
    input [k-1:0] count_to;
-   output 	reg done;
+   output reg done;
 
-   reg [k-1:0]  count;
-
-   always @(posedge clk, negedge _reset)
+   reg [k-1:0]  count = 0;
+	
+	
+   always @(posedge clk)
      begin
-	if(! _reset)
-	  count = 0;
-	else if(enable)
-	  count = count + 1;
-	if(count == count_to)
-	  done = 1;
-	else
-	  done = 0;
-     end
+	  if(enable) begin
+		 count = count + 1;
+		 if(count == count_to)
+			done = 1;
+	  end
+	  else begin
+			count = 0;
+			done = 0;
+			end
+   end
 endmodule // counter
 
    
