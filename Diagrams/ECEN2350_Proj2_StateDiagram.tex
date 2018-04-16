@@ -9,7 +9,7 @@
                     thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
 
   \node[main node] (1) {RESET: 00};
-  \node[main node] (2) [below left of=1] {Stopped: 11};
+  \node[main node] (2) [below left of=1] {Displaying: 11};
   \node[main node] (3) [below right of=2] {Timing: 10};
   \node[main node] (4) [below right of=1] {Delay: 01};
 
@@ -21,7 +21,7 @@
         edge [bend right]node {KEY0 released} (4)
 
 
-    (3) edge[bend left] node [right] {KEY0 pressed} (2)
+    (3) edge[bend left] node [right] {KEY1 pressed} (2)
     (4)	edge [bend right] node [right]{KEY1 pressed} (1)
 
     (4)	edge [bend left] node {Delay Reached} (3)

@@ -21,4 +21,5 @@ incremental_db
 
 .json
 
-.qsys_edit/
+.qsys_edit/.tex
+.gz

@@ -52,4 +52,4 @@ assign HEX3[7] = 1;
 assign HEX4[7] = 1;
 assign HEX5[7] = 1;
 
-endmodule
+endmodule // LFSR_ut
