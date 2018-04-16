@@ -4,29 +4,19 @@
 //The 16-bit Fibonnaci LFSR can go through all 65535 states. Good one. 
 // BUT, 65 seconds is probably toooo long.
 
-module LFSR(enable, LF_shift_reg, ready);
+module LFSR(enable, LF_shift_reg);
    input enable;
    output reg [11:0] LF_shift_reg;
-   output reg	ready;
-   
    reg 		in_shift;
 
    always @ (posedge enable)
      begin
-//	while(!ready) //top currently has this wait-til ready functionality.
-//	  begin
 		if(!LF_shift_reg)
-			LF_shift_reg = 12'b101101110110;
+			LF_shift_reg <= 12'b101101110110;
 			else begin
-	     in_shift = LF_shift_reg[11] ^ LF_shift_reg[10];
-	     LF_shift_reg = {LF_shift_reg[10:0],in_shift};
+	     in_shift <= LF_shift_reg[11] ^ LF_shift_reg[10];
+	     LF_shift_reg <= {LF_shift_reg[10:0],in_shift};
 		  end
-//	     if (LF_shift_reg < 500)
-//	       ready = 0;
-//	     else
-//	       ready = 1;
-//	  end
-	
      end
 endmodule // LFSR
 
