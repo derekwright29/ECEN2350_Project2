@@ -1,14 +1,14 @@
-module BCD_decoder(count,display, cout);
-   input [3:0] count;
-   output reg [3:0] display;
-   output 	reg    cout;
-
-   always @(count)
-     begin
-	display = count % 10;
-	cout = (count > 9) ? 1:0;
-     end
-endmodule // BCD_decoder
+//module BCD_decoder(count,display, cout);
+//   input [3:0] count;
+//   output reg [3:0] display;
+//   output 	reg    cout;
+//
+//   always @(count)
+//     begin
+//	display = count % 10;
+//	cout = (count > 9) ? 1:0;
+//     end
+//endmodule // BCD_decoder
 /*
  * 
    

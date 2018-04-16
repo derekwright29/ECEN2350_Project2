@@ -12,10 +12,10 @@ module LFSR(enable, LF_shift_reg);
    always @ (posedge enable)
      begin
 		if(!LF_shift_reg)
-			LF_shift_reg = 12'b101101110110;
+			LF_shift_reg <= 12'b101101110110;
 			else begin
-	     in_shift = LF_shift_reg[11] ^ LF_shift_reg[10];
-	     LF_shift_reg = {LF_shift_reg[10:0],in_shift};
+	     in_shift <= LF_shift_reg[11] ^ LF_shift_reg[10];
+	     LF_shift_reg <= {LF_shift_reg[10:0],in_shift};
 		  end
      end
 endmodule // LFSR
