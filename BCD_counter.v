@@ -8,7 +8,7 @@ module BCD_counter(clk,enable,clear_,data, count,RCO);
 	wire load_;
 	assign load_ = ~(count[3] & count[0]);
 	
-	always @(posedge clk, negedge clear_)
+	always @(posedge clk)
 	begin
 		if (!clear_)
 			count = 0;
@@ -25,8 +25,8 @@ module BCD_counter(clk,enable,clear_,data, count,RCO);
 				RCO = 0;
 			end
 		end
-	   else begin
-			
+	   else if (!enable) begin
+			count = 0;
 	   end	
 	end
 

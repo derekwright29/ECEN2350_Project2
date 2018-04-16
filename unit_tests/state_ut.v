@@ -35,27 +35,29 @@ module state_ut(
    wire clk, clk_1kHz;
 	assign clk = MAX10_CLK1_50;
    wire LFSR_ready;
-   reg [2:0] 		     nextState;
 	reg [2:0] 		     curState;
 	reg LFSR_en;
 	reg test_sig;
 
   // button state control
-	reg[1:0] buttons = 0; 
+	reg[1:0] buttons; 
    always @(negedge KEY[1],posedge KEY[0], posedge LFSR_ready)
-     begin
+   begin
 	  if(LFSR_ready)
 			buttons = 2;
 	  else begin
 		if(!KEY[1]) begin
-			if(curState == TIMING)
-				buttons = 3;
-			else if (curState == DISPLAYING) begin
-				buttons = 0;	
+			if(curState == TIMING)begin
+				buttons <= 3;
+				test_sig <= 0;
 				end
+			else if (curState == DISPLAYING && SW[5]) 
+				buttons <= 0;			
 			else if (curState == DELAYING)
-				buttons = 0;
-				test_sig = 1;
+				buttons <= 0;	
+			else if (curState == HI_SCORE)
+				buttons <= 0;
+			else buttons <= 3;
 		 end
 		else begin
 		if (curState == DISPLAYING)
@@ -73,16 +75,16 @@ module state_ut(
 		else begin
 			if(LFSR_ready) begin
 				if(curState == DELAYING) 
-					curState = TIMING;
+					curState <= TIMING;
 			end
 			else if(buttons == 0)
-				curState = HI_SCORE;
+				curState <= HI_SCORE;
 			else if(buttons == 1) 
-				curState = DELAYING;
+				curState <= DELAYING;
 			else if(buttons == 2)
-				curState = TIMING;
+				curState <= TIMING;
 			else if(buttons == 3) 
-				curState = DISPLAYING;
+				curState <= DISPLAYING;
 		end
   end
 	
@@ -110,6 +112,6 @@ module state_ut(
 	assign LEDR[1:0] = buttons;
 	assign LEDR[9] = LFSR_en;
 	assign LEDR[8] = LFSR_ready;
-	assign HEX3[7] = test_sig;
+	assign LEDR[2] = test_sig;
  
 endmodule

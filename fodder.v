@@ -220,3 +220,69 @@ reg [3:0] hi_score_cs, hi_score_ds,hi_score_s;
    
    
 endmodule
+
+
+
+
+
+
+
+wire [12:0] ReacTime; //means we can go up to 8.191 seconds
+	wire [15:0] HEX_out;
+	
+	wire LFSR_count_enable;
+
+
+
+
+
+//=======================================================
+//  Structural coding
+//=======================================================
+
+//	
+//	 //Button sate control
+//   always @(posedge KEY[1])
+//     begin
+//	buttons[1] = ~buttons[1];
+//     end
+//   always @(posedge KEY[0])
+//     begin
+//		buttons[0] = ~buttons[0];
+//     end
+//	  
+//	 stateMachine detState(clk_50MHZ, currState, nextState);
+//	 clk_divider(clk_50MHZ, clk_1kHZ);
+//	 
+//	 always @ (currState)
+//		begin
+//			if (currState == COUNTING) begin
+//				timer BCD_counter(clk_1kHZ, ReacTime);
+//		end
+//		
+//		dispTime BCD(ReacTime, HEX_out);
+//		
+//		assign HEX0 = HEX_out[7:0];
+
+   wire LFSR_ready, LFSR_en,delay_over;
+   reg [9:0] LFSR_out;
+ 
+// attempt: doesn't compile. Probably because of while/generate combo...
+//   always @(posedge LFSR_en)
+//     begin
+//		generate
+//			while(!LFSR_ready)
+//				begin
+//					LFSR get_delay0(LFSR_en, LFSR_out, LFSR_ready);
+//				end
+//	   endgenerate
+//		LFSR_ready = 0; //reset for next time
+//		LFSR_count_enable = 1;
+//     end
+   
+   counter wait_delay(clk_1kHz, 1, LFSR_count_enable, LFSR_out, delay_over);
+		
+
+   clock_div test1(MAX10_CLK1_50, clk_1kHz);
+   BCD_counter timer1(clk_1kHz, ReacTime);
+   BCD_decoder BCD(ReacTime, HEX_out);
